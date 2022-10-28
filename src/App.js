@@ -22,7 +22,7 @@ function App() {
         display: "flex",
         height: "100vh",
         width: "100vw",
-        backgroundColor: "white",
+        backgroundColor: "gold",
       }}
     >
       <ul
@@ -31,12 +31,40 @@ function App() {
           flexDirection: "column",
           backgroundColor: "white",
           padding: "0 0 0 0",
+          paddingRight: "50px",
           width: "20vw",
+          height: "70vh",
+          marginLeft: "40px",
+          marginTop: "70px",
+          overflowY: "auto",
         }}
       >
+        <h2
+          style={{
+            fontSize: "18px",
+            marginLeft: "50%",
+            transform: "translateX(-50%)",
+            paddingTop: "15px",
+            color: "Black",
+            fontWeight: "bold",
+          }}
+        >
+          Total questions: {cards[cards.length - 1].questionNum}
+        </h2>
         {cards.map((card, index) => (
           <button
-            style={{ width: "100%", height: "2vh" }}
+            style={{
+              width: "100%",
+              height: "2vh",
+              marginLeft: "20px",
+              marginTop: "10px",
+              marginRight: "20px",
+              fontWeight: "600",
+              fontSize: "14px",
+              backgroundColor: "white",
+
+              border: "none",
+            }}
             onClick={() => {
               let num = card.questionNum;
               let newStateObj = {};
@@ -45,11 +73,10 @@ function App() {
               }
               newStateObj[num] = true;
               setStateObj(newStateObj);
-              console.log(stateObj);
             }}
             key={index}
           >
-            {card.questionNum}
+            question {card.questionNum}
           </button>
         ))}
       </ul>
@@ -57,9 +84,8 @@ function App() {
         {cards.map((card, index) => {
           if (stateObj[card.questionNum]) {
             return <CardFunc key={index} card={card} />;
-          } else {
-            return <p key={index}></p>;
           }
+          return null;
         })}
       </ul>
     </div>
@@ -83,10 +109,11 @@ function CardFunc({ card }) {
     return (
       <button
         style={{
-          height: "90vh",
+          height: "70vh",
           width: "70vw",
           marginRight: "15vw",
           backgroundColor: "white",
+          paddingBottom: "50%",
         }}
         onClick={() => setCard(!cardSide)}
       >
@@ -97,7 +124,7 @@ function CardFunc({ card }) {
             fontSize: "25px",
           }}
         >
-          {card.question}
+          {card.questionNum}) {card.question}
         </h2>
         <ul style={{ marginLeft: "-10%", marginBottom: "50%" }}>
           {card.possibleAnswers.map((answer, index) => (
@@ -119,33 +146,31 @@ function CardFunc({ card }) {
     );
   } else {
     return (
-      <>
-        <button
-          style={{
-            backgroundColor: "white",
-            height: "90vh",
-            width: "70vw",
-            marginRight: "15vw",
-            paddingBottom: "60%",
-            fontSize: "23px",
-          }}
-          id="card"
-          onClick={() => setCard(!cardSide)}
-        >
-          {card.answer.map((answer, index) => (
-            <li
-              style={{
-                marginLeft: "50%",
-                marginTop: "5%",
-                transform: "translateX(-50%)",
-              }}
-              key={index}
-            >
-              {answer}
-            </li>
-          ))}
-        </button>
-      </>
+      <button
+        style={{
+          backgroundColor: "white",
+          height: "70vh",
+          width: "70vw",
+          marginRight: "15vw",
+          paddingBottom: "50%",
+          fontSize: "23px",
+        }}
+        id="card"
+        onClick={() => setCard(!cardSide)}
+      >
+        {card.answer.map((answer, index) => (
+          <li
+            style={{
+              marginLeft: "50%",
+              marginTop: "5%",
+              transform: "translateX(-50%)",
+            }}
+            key={index}
+          >
+            {answer}
+          </li>
+        ))}
+      </button>
     );
   }
 }
